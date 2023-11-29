@@ -13,7 +13,7 @@ const run = async () => {
         // await task5()
         // await task6()
         // await task7()
-        await task8()
+        // await task8()
         // await task9()
         // await task10()
         // await task11()
@@ -204,7 +204,10 @@ async function task8() {
 // - Find all articles that contains tags 'super' or 'tag2-a'
 async function task9() {
     try {
-
+        const articlesCollection = db.collection('articles')
+        const filter = {tags: {$in: ['super', 'tag2-a']}}
+        const articles = await articlesCollection.find(filter).toArray()
+        console.log('Articles', articles)
     } catch (err) {
         console.log('task9', err)
     }
