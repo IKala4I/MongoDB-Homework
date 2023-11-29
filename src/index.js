@@ -62,11 +62,7 @@ async function task2() {
                 {tags: 'Engineering'}
             ]
         }
-        const updateDocument = {
-            $set: {
-                skills: []
-            }
-        }
+        const updateDocument = {$set: {skills: []}}
         const result = await usersCollection.updateMany(filter, updateDocument)
         const users = await usersCollection.find({}).toArray()
         console.log(`${result.modifiedCount} users updated.\nUsers ${JSON.stringify(users, null, 2)}`)
@@ -79,7 +75,10 @@ async function task2() {
 //   Filter: the document should contain the 'skills' field
 async function task3() {
     try {
-
+        const filter = {skills: {$exists: true}}
+        const update = {$push: {skills: {$each: ['js', 'git']}}}
+        const user = await usersCollection.findOneAndUpdate(filter, update, {returnDocument: 'after'})
+        console.log('Updated document:', user)
     } catch (err) {
         console.error('task3', err)
     }
@@ -89,7 +88,13 @@ async function task3() {
 //   Set firstName: "Jason", lastName: "Wood", tags: ['a', 'b', 'c'], department: 'Support'
 async function task4() {
     try {
-
+        const filter = {
+            email: {$regex: /^john/i},
+            'address.state': 'CA'
+        }
+        const replacement = {firstName: 'Jason', lastName: 'Wood', tags: ['a', 'b', 'c'], department: 'Support'}
+        const user = await usersCollection.findOneAndReplace(filter, replacement, {returnDocument: 'after'})
+        console.log('Replaced user', user)
     } catch (err) {
         console.log('task4', err)
     }
