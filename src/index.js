@@ -116,7 +116,10 @@ async function task5() {
 //   ONLY if the 'b' value does not exist in the 'tags'
 async function task6() {
     try {
-
+        const filter = {firstName: 'Jason', lastName: 'Wood'}
+        const update = {$addToSet: {tags: 'b'}}
+        const user = await usersCollection.findOneAndUpdate(filter, update, {returnDocument: 'after'})
+        console.log('Add tag b if doesn\'t exist', user)
     } catch (err) {
         console.log('task6', err)
     }
