@@ -13,7 +13,7 @@ const run = async () => {
         // await task5()
         // await task6()
         // await task7()
-        // await task8()
+        await task8()
         // await task9()
         // await task10()
         // await task11()
@@ -128,7 +128,9 @@ async function task6() {
 // - Delete all users by department (Support)
 async function task7() {
     try {
-
+        const filter = {department: 'Support'}
+        const res = await usersCollection.deleteMany(filter)
+        console.log(`Deleted count: ${res.deletedCount}`)
     } catch (err) {
         console.log('task7', err)
     }
@@ -142,7 +144,58 @@ async function task7() {
 //   Pull ['tag2', 'tag1-a'] from all articles
 async function task8() {
     try {
+        const articlesCollection = db.collection('articles')
+        const result = await articlesCollection.bulkWrite([
+            {
+                insertOne: {
+                    document: {
+                        name: 'article 1',
+                        type: 'a',
+                        tags: []
+                    }
+                }
+            },
+            {
+                insertOne: {
+                    document: {
+                        name: 'article 2',
+                        type: 'b',
+                        tags: []
+                    }
+                }
+            },
+            {
+                insertOne: {
+                    document: {
+                        name: 'article 3',
+                        type: 'c',
+                        tags: []
+                    }
+                }
+            },
+            {
+                updateMany: {
+                    filter: {type: 'a'},
+                    update: {$set: {tags: ['tag1-a', 'tag2-a', 'tag3']}}
+                }
+            },
+            {
+                updateMany: {
+                    filter: {type: {$ne: 'a'}},
+                    update: {$push: {tags: {$each: ['tag2', 'tag3', 'super']}}}
+                }
+            },
+            {
+                updateMany: {
+                    filter: {},
+                    update: {$pull: {tags: {$in: ['tag2', 'tag1-a']}}}
 
+                }
+            }
+        ])
+        console.log('Result', result)
+        const articles = await articlesCollection.find().toArray()
+        console.log('Articles', articles)
     } catch (err) {
         console.error('task8', err)
     }
