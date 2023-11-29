@@ -103,7 +103,10 @@ async function task4() {
 // - Pull tag 'c' from the first document where firstName: "Jason", lastName: "Wood"
 async function task5() {
     try {
-
+        const filter = {firstName: 'Jason', lastName: 'Wood'}
+        const update = {$pull: {tags: 'c'}}
+        const user = await usersCollection.findOneAndUpdate(filter, update, {returnDocument: 'after'})
+        console.log('User without tag c', user)
     } catch (err) {
         console.log('task5', err)
     }
