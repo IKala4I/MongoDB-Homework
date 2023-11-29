@@ -5,8 +5,8 @@ const usersCollection = db.collection('users')
 
 const run = async () => {
     try {
-        //await getUsersExample()
-         await task1()
+        // await getUsersExample()
+        // await task1()
         // await task2()
         // await task3()
         // await task4()
@@ -56,7 +56,20 @@ async function task1() {
 // - Add new field 'skills: []" for all users where age >= 25 && age < 30 or tags includes 'Engineering'
 async function task2() {
     try {
-
+        const filter = {
+            $or: [
+                {age: {$gte: 25, $lt: 30}},
+                {tags: 'Engineering'}
+            ]
+        }
+        const updateDocument = {
+            $set: {
+                skills: []
+            }
+        }
+        const result = await usersCollection.updateMany(filter, updateDocument)
+        const users = await usersCollection.find({}).toArray()
+        console.log(`${result.modifiedCount} users updated.\nUsers ${JSON.stringify(users, null, 2)}`)
     } catch (err) {
         console.error('task2', err)
     }
