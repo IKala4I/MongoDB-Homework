@@ -1,30 +1,30 @@
-import { connect, close } from './connection.js';
+import { connect, close } from './connection.js'
 
-const db = await connect();
-const usersCollection = db.collection("users");
+const db = await connect()
+const usersCollection = db.collection("users")
 
 const run = async () => {
   try {
-    await getUsersExample();
-    // await task1();
-    // await task2();
-    // await task3();
-    // await task4();
-    // await task5();
-    // await task6();
-    // await task7();
-    // await task8();
-    // await task9();
-    // await task10();
-    // await task11();
-    // await task12();
+    await getUsersExample()
+    // await task1()
+    // await task2()
+    // await task3()
+    // await task4()
+    // await task5()
+    // await task6()
+    // await task7()
+    // await task8()
+    // await task9()
+    // await task10()
+    // await task11()
+    // await task12()
 
-    await close();
+    await close()
   } catch(err) {
     console.log('Error: ', err)
   }
 }
-run();
+run()
 
 // #### Users
 // - Get users example
@@ -35,10 +35,10 @@ async function getUsersExample () {
       usersCollection.findOne(),
     ])
 
-    console.log('allUsers', allUsers);
-    console.log('firstUser', firstUser);
+    console.log('allUsers', allUsers)
+    console.log('firstUser', firstUser)
   } catch (err) {
-    console.error('getUsersExample', err);
+    console.error('getUsersExample', err)
   }
 }
 
@@ -76,7 +76,7 @@ async function task4 () {
   try {
 
   } catch (err) {
-    console.log('task4', err);
+    console.log('task4', err)
   }
 }
 
@@ -85,7 +85,7 @@ async function task5 () {
   try {
 
   } catch (err) {
-    console.log('task5', err);
+    console.log('task5', err)
   }
 }
 
@@ -95,7 +95,7 @@ async function task6 () {
   try {
 
   } catch (err) {
-    console.log('task6', err);
+    console.log('task6', err)
   }
 }
 
@@ -104,7 +104,7 @@ async function task7 () {
   try {
 
   } catch (err) {
-    console.log('task7', err);
+    console.log('task7', err)
   }
 }
 
@@ -118,7 +118,7 @@ async function task8 () {
   try {
     
   } catch (err) {
-    console.error('task8', err);
+    console.error('task8', err)
   }
 }
 
@@ -127,7 +127,7 @@ async function task9 () {
   try {
 
   } catch (err) {
-    console.log('task9', err);
+    console.log('task9', err)
   }
 }
 
@@ -137,7 +137,7 @@ async function task10 () {
   try {
 
   } catch (err) {
-    console.log('task10', err);
+    console.log('task10', err)
   } 
 }
 
@@ -146,7 +146,7 @@ async function task11 () {
   try {
 
   } catch (err) {
-    console.log('task11', err);
+    console.log('task11', err)
   } 
 }
 
@@ -155,6 +155,6 @@ async function task12 () {
   try {
 
   } catch (err) {
-    console.log('task12', err);
+    console.log('task12', err)
   } 
 }
