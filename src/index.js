@@ -253,7 +253,29 @@ async function task10() {
 // - Calculate the average score for homework for all students, the result should be [ { avg_score: <number> } ]
 async function task11() {
     try {
-
+        const pipeline = [
+            {
+                $unwind: '$scores'
+            },
+            {
+                $match: {
+                    'scores.type': 'homework'
+                }
+            },
+            {
+                $group: {
+                    _id: null,
+                    avg_score: {$avg: '$scores.score'}
+                }
+            },
+            {
+                $project: {
+                    _id: 0
+                }
+            }
+        ]
+        const res = await studentsCollection.aggregate(pipeline).toArray()
+        console.log(res)
     } catch (err) {
         console.log('task11', err)
     }
