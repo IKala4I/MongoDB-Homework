@@ -2,6 +2,7 @@ import {connect, close} from './connection.js'
 
 const db = await connect()
 const usersCollection = db.collection('users')
+const studentsCollection = db.collection('students')
 
 const run = async () => {
     try {
@@ -217,7 +218,33 @@ async function task9() {
 // - Find the student who have the worst score for homework, the result should be [ { name: <name>, worst_homework_score: <score> } ]
 async function task10() {
     try {
-
+        const pipeline = [
+            {
+                $unwind: '$scores'
+            },
+            {
+                $match: {
+                    'scores.type': 'homework'
+                }
+            },
+            {
+                $sort: {
+                    'scores.score': 1
+                }
+            },
+            {
+                $limit: 1
+            },
+            {
+                $project: {
+                    _id: 0,
+                    name: 1,
+                    worst_homework_score: '$scores.score'
+                }
+            }
+        ]
+        const student = await studentsCollection.aggregate(pipeline).toArray()
+        console.log('student who have the worst score for homework', student)
     } catch (err) {
         console.log('task10', err)
     }
