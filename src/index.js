@@ -18,7 +18,7 @@ const run = async () => {
         // await task9()
         // await task10()
         // await task11()
-        // await task12()
+        //await task12()
 
         await close()
     } catch (err) {
@@ -275,7 +275,7 @@ async function task11() {
             }
         ]
         const res = await studentsCollection.aggregate(pipeline).toArray()
-        console.log(res)
+        console.log('Average score', res)
     } catch (err) {
         console.log('task11', err)
     }
@@ -284,7 +284,33 @@ async function task11() {
 // - Calculate the average score by all types (homework, exam, quiz) for each student, sort from the largest to the smallest value
 async function task12() {
     try {
-
+        const pipeline = [
+            {
+                $unwind: '$scores'
+            },
+            {
+                $group: {
+                    _id: '$name',
+                    avg_score: {
+                        $avg: '$scores.score'
+                    }
+                }
+            },
+            {
+                $sort: {
+                    avg_score: -1
+                }
+            },
+            {
+                $project: {
+                    _id: 0,
+                    name: '$_id',
+                    avg_score: 1
+                }
+            }
+        ]
+        const students = await studentsCollection.aggregate(pipeline).toArray()
+        console.log('Students', students)
     } catch (err) {
         console.log('task12', err)
     }
